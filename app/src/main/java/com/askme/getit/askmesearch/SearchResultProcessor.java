@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hcv on 17/06/15.
@@ -33,6 +34,35 @@ public class SearchResultProcessor {
                 sModel.setCategory(j.getString("category"));
                 sModel.setCompany_name(j.getString("company_name"));
                 sModel.setMobile(j.getString(" mobile"));
+
+                sModel.setDealimage(jsonObject.getString("dealimage"));
+                sModel.setDescription(jsonObject.getString("description"));
+
+                sModel.setDetailurl(jsonObject.getString("detailurl"));
+                sModel.setDiscount(jsonObject.getString("discount"));
+                sModel.setHeaderimage(jsonObject.getString("headerimage"));
+                sModel.setId(jsonObject.getString("id"));
+                sModel.setLandingurl(jsonObject.getString("landingurl"));
+                sModel.setOfferedprice(jsonObject.getString("offeredprice"));
+                sModel.setOriginalprice(jsonObject.getString("originalprice"));
+                sModel.setPartnerurl(jsonObject.getString("partnerurl"));
+                sModel.setPrice(jsonObject.getString("price"));
+                sModel.setSavedpercentage(jsonObject.getString("savedpercentage"));
+                sModel.setSavedprice(jsonObject.getString("savedprice"));
+                sModel.setShow(jsonObject.getString("show"));
+                sModel.setTitle( jsonObject.getString("title"));
+                sModel.setType(jsonObject.getString("type"));
+                sModel.setValidity(jsonObject.getString("validity"));
+                sModel.setValidity(jsonObject.getString("vertical"));
+
+                JSONArray keywordarray = jsonObject.getJSONArray("keywords");
+                List<String> keyewordstring = new ArrayList<String>();
+                for (int x = 0;x < keywordarray.length(); x++) {
+                    keyewordstring.add(keywordarray.getJSONObject(x).toString());
+                }
+
+                sModel.setKeywords(keyewordstring);
+
                 searchList.add(sModel);
             }
 

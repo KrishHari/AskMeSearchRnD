@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mobile_text"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/mobile" />
+
+    <TextView
+        android:layout_toRightOf="@+id/mobile"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/mobileText" />
+
+    <TextView
+        android:layout_below="@+id/mobileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/category_name"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/category" />
+
+    <TextView
+        android:layout_below="@+id/mobileText"
+        android:layout_toRightOf="@+id/category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/categoryText" />
+
+    <TextView
+        android:layout_below="@+id/categoryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/address_text"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/address" />
+
+    <TextView
+        android:layout_below="@+id/categoryText"
+        android:layout_toRightOf="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/addressText" />
+
+    <TextView
+        android:layout_below="@+id/addressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/company_name"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/companyName" />
+
+    <TextView
+        android:layout_toRightOf="@+id/companyName"
+        android:layout_below="@+id/addressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/abc_input_method_navigation_guard"
+        android:id="@+id/companyNameText" />
+</RelativeLayout>

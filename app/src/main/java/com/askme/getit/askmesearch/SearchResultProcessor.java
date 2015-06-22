@@ -31,8 +31,8 @@ public class SearchResultProcessor {
                 SearchModel sModel = new SearchModel();
                 sModel.setAddress(j.getString("address"));
                 sModel.setCategory(j.getString("category"));
-                sModel.setCompanyName(j.getString("company_name"));
-                sModel.setMobileNumber(j.getString(" mobile"));
+                sModel.setCompany_name(j.getString("company_name"));
+                sModel.setMobile(j.getString(" mobile"));
                 searchList.add(sModel);
             }
 

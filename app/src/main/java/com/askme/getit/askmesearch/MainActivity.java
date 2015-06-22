@@ -15,12 +15,13 @@ import android.widget.ListView;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.jar.JarEntry;
 
 public class MainActivity extends AppCompatActivity {
 
     Button searchButton;
     EditText searchText;
-    private ArrayList<SearchModel> searchResultList = new ArrayList<SearchModel>();
+    private ArrayList<SearchModel> searchResultList = new ArrayList<>();
     SearchListAdapter listAdapter;
     ListView searchList;
     @Override
@@ -30,33 +31,63 @@ public class MainActivity extends AppCompatActivity {
         searchButton = (Button)findViewById(R.id.searchButton);
         searchText = (EditText)findViewById(R.id.searchText);
         searchList =  (ListView)findViewById(R.id.deals_listview);
-        final SearchResultProcessor searchResultProcessor = new SearchResultProcessor(getApplicationContext());
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               SearchProcess searchProcess = new SearchProcess(new SearchResponse() {
-                   @Override
-                   public void postResponse(String result) {
-                       try{
-                           searchResultList = searchResultProcessor.processResult(result);
-                           listAdapter = new SearchListAdapter(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,searchResultList);
-                           searchList.setAdapter(listAdapter);
-                       }catch (JSONException j){
-                            j.printStackTrace();
-                       }
 
-                   }
-               },MainActivity.this);
+                try{
 
-                searchProcess.execute(searchText.getText().toString().trim());
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                    InputMethodManager inputManager = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+
+
+                }
+                catch (NullPointerException Excaption)
+                {
+
+                }
             }
         });
     }
+
+    void  performSearcg(){
+
+
+        final SearchResultProcessor searchResultProcessor = new SearchResultProcessor(getApplicationContext());
+        SearchResponse responseProcreser = new SearchResponse() {
+          @Override
+          public void postResponse(String result) {
+              try{
+                  searchResultList = searchResultProcessor.processResult(result);
+                  listAdapter = new SearchListAdapter(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,searchResultList);
+                  searchList.setAdapter(listAdapter);
+              }catch (JSONException j){
+                  j.printStackTrace();
+              }
+
+          }
+      };
+
+
+        if(true){
+            SearchProcess searchProcess = new SearchProcess(responseProcreser,MainActivity.this);
+            searchProcess.execute(searchText.getText().toString().trim());
+        }
+        else{
+
+            SearchProcressVolley searchProcess = new SearchProcressVolley(responseProcreser,MainActivity.this);
+            searchProcess.performrequest(searchText.getText().toString().trim());
+
+        }
+
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

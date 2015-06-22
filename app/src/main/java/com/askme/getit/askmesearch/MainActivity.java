@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 try{
+                    performSearch();
 
 
                     InputMethodManager inputManager = (InputMethodManager)
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void  performSearcg(){
+    void  performSearch(){
 
 
         final SearchResultProcessor searchResultProcessor = new SearchResultProcessor(getApplicationContext());
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
       };
 
 
-        if(true){
+        if(false){
             SearchProcess searchProcess = new SearchProcess(responseProcreser,MainActivity.this);
             searchProcess.execute(searchText.getText().toString().trim());
         }

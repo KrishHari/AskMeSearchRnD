@@ -39,7 +39,7 @@ public class SearchProcressVolley {
 
     void performrequest(String query) {
 
-        String queryUrl = Constants.BaseUrl + query;
+        String queryUrl = Constants.BaseUrl+query;
         StringRequest strReq = new StringRequest(Request.Method.GET,
                 queryUrl, new Response.Listener<String>() {
 
@@ -68,16 +68,19 @@ public class SearchProcressVolley {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String,String> headers = new HashMap<>();
                 //  headers.put("Content-Type", "application/json");
-                headers.put("User-agent", System.getProperty("http.agent"));
+                //headers.put("User-agent", System.getProperty("http.agent"));
                 return headers;
             }
 
 
         };
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, Constants.TAG);
         dialog.showDialog();
+
+        // Adding request to request queue
+        Log.i("instance",""+AppController.getInstance());
+        AppController.getInstance().addToRequestQueue(strReq, Constants.TAG);
+
 
 
     }

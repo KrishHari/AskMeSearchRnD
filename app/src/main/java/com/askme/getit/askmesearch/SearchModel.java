@@ -1,10 +1,17 @@
 package com.askme.getit.askmesearch;
 
+import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import java.util.List;
 
 /**
  * Created by hcv on 16/06/15.
  */
+
+
+
+@JsonObject
 public class SearchModel {
 
     //private String mobileNumber;
@@ -13,51 +20,51 @@ public class SearchModel {
    // private String companyName;
 
 
-    //@JsonField
+    @JsonField
     private String mobile;
-    //@JsonField
+    @JsonField
     private String address;
-   // @JsonField
-   private String category;
-   // @JsonField
-   private String company_name;
-   // @JsonField
-   private String dealimage;
-   // @JsonField
-   private String description;
-    // @JsonField
-   private String detailurl;
-   // @JsonField
-   private String discount;
-    //@JsonField
+    @JsonField
+    private String category;
+    @JsonField
+    private String company_name;
+    @JsonField
+    private String dealimage;
+    @JsonField
+    private String description;
+    @JsonField
+    private String detailurl;
+    @JsonField
+    private String discount;
+    @JsonField
     private String headerimage;
-    //@JsonField
+    @JsonField
     private String id;
-    //@JsonField
+    @JsonField
     private List<String> keywords;
-    //@JsonField
+    @JsonField
     private String landingurl;
-    //@JsonField
+    @JsonField
     private String offeredprice;
-    //@JsonField
+    @JsonField
     private String originalprice;
-    //@JsonField
+    @JsonField
     private String partnerurl;
-    //@JsonField
+    @JsonField
     private String price;
-    //@JsonField
+    @JsonField
     private String savedpercentage;
-    //@JsonField
+    @JsonField
     private String savedprice;
-   // @JsonField
-   private String show;
-    //@JsonField
+    @JsonField
+    private String show;
+    @JsonField
     private String title;
-    // @JsonField
+    @JsonField
     private String type;
-    // @JsonField
+    @JsonField
     private String validity;
-    // @JsonField
+    @JsonField
     private String vertical;
 
 

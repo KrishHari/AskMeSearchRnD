@@ -3,6 +3,7 @@ package com.askme.getit.askmesearch;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Response;
 import com.bluelinelabs.logansquare.LoganSquare;
 
 import org.json.JSONException;
@@ -18,7 +19,7 @@ import java.util.List;
 public class SearchResultProcressorLS {
 
     private Context mContext;
-    private ArrayList<SearchModel> searchList;
+
     long startTime;
     public SearchResultProcressorLS(Context context) {
         this.mContext = context;
@@ -32,7 +33,10 @@ public class SearchResultProcressorLS {
             JSONObject rootobject = new JSONObject(response.toString());
             String listitngString =rootobject.getJSONObject("deals").getString("listings");
 
-            tmp = new ArrayList<SearchModel>(LoganSquare.parseList(listitngString, SearchModel.class));
+            List<SearchModel> temp  =   LoganSquare.parseList(listitngString, SearchModel.class);
+
+
+            tmp = new ArrayList<SearchModel>(temp);
 
 
 
@@ -46,7 +50,7 @@ public class SearchResultProcressorLS {
 
 
         long stopTime = System.nanoTime();
-        System.out.println("Elapsed time for parsing "+(stopTime - startTime)+searchList.toString());
+        System.out.println("Elapsed time for parsing "+(stopTime - startTime)+tmp.toString());
         return tmp;
 
 

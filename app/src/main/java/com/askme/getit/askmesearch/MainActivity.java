@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     void  performSearch(){
 
 
-        final SearchResultProcessor searchResultProcessor = new SearchResultProcessor(getApplicationContext());
+        final SearchResultProcressorLS searchResultProcessor = new SearchResultProcressorLS(getApplicationContext());
         SearchResponse responseProcreser = new SearchResponse() {
           @Override
           public void postResponse(String result) {

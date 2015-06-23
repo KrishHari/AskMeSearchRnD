@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
                   listAdapter = new SearchListAdapter(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,searchResultList);
                   searchList.setAdapter(listAdapter);
               }catch (JSONException j){
+                  Log.d(Constants.TAG,j.getMessage());
                   j.printStackTrace();
+
               }
 
           }

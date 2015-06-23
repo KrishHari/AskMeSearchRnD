@@ -4,6 +4,13 @@ android {
     compileSdkVersion 22
     buildToolsVersion "23.0.0 rc2"
 
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
     defaultConfig {
         applicationId "com.askme.getit.askmesearch"
         minSdkVersion 15

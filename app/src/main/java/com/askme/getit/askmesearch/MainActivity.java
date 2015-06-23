@@ -11,16 +11,30 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.jar.JarEntry;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class MainActivity extends AppCompatActivity {
+
+    @InjectView(R.id.httpTimeTitle)
+    TextView httpTime;
+
+    @InjectView(R.id.jsonTime)
+    TextView jsontime;
 
     Button searchButton;
     EditText searchText;
+
+    String httptitle ;
+    String jsontitle ;
+    long strttime,httpRoundTripTime,jsonParseTime;
     private ArrayList<SearchModel> searchResultList = new ArrayList<>();
     SearchListAdapter listAdapter;
     ListView searchList;
@@ -28,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
         searchButton = (Button)findViewById(R.id.searchButton);
         searchText = (EditText)findViewById(R.id.searchText);
         searchList =  (ListView)findViewById(R.id.deals_listview);
@@ -37,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 try{
+                    strttime=System.nanoTime();
+
+                    httpTime.setText(httptitle);
+                    jsontime.setText(jsontitle);
                     performSearch();
 
 
@@ -54,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        httptitle = getResources().getString(R.string.httptime);
+        jsontitle = getResources().getString(R.string.jsontime);
     }
 
     void  performSearch(){
@@ -64,8 +86,20 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void postResponse(String result) {
               try{
+                  httpRoundTripTime= System.nanoTime();
+                  httpTime.setText(httptitle+" "+((double)(httpRoundTripTime-strttime)/1000000000.0));
+
+
                   searchResultList = searchResultProcessor.processResult(result);
                   listAdapter = new SearchListAdapter(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,searchResultList);
+                  jsonParseTime=System.nanoTime();
+
+
+
+
+
+                  jsontime.setText(jsontitle  +" "+ ((double) (jsonParseTime - httpRoundTripTime) / 1000000000.0));
+
                   searchList.setAdapter(listAdapter);
               }catch (JSONException j){
                   Log.d(Constants.TAG,j.getMessage());

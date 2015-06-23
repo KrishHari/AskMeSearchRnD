@@ -6,6 +6,8 @@
     <string name="submit_button_text">Search</string>
     <string name="mobile_text">Mobile</string>
     <string name="company_name">Company</string>
+    <string name="httptime">Time for Http call :</string>
+    <string name="jsontime">Time for JSON parsing :</string>
     <string name="category_name">Category</string>
     <string name="address_text">Address</string>
 </resources>

@@ -26,8 +26,32 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <ListView
+    <TextView
         android:layout_below="@+id/searchButton"
+        android:id="@+id/httpTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/httptime"
+        />
+
+    <TextView
+        android:layout_below="@+id/httpTimeTitle"
+        android:id="@+id/jsonTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/httptime"
+        />
+
+
+    <ListView
+        android:layout_below="@+id/jsonTime"
         android:id="@+id/deals_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>

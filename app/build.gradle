@@ -26,4 +26,5 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'com.bluelinelabs:logansquare:1.0.6'
     compile 'com.bluelinelabs:logansquare-compiler:1.0.6'
+    compile 'com.jakewharton:butterknife:6.1.0'
 }

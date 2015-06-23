@@ -47,10 +47,10 @@ public class SearchListAdapter extends ArrayAdapter<SearchModel> {
         TextView companyName = (TextView)v.findViewById(R.id.companyNameText);
 
         if (result !=null){
-            mobileText.setText(result.getMobileNumber());
+            mobileText.setText(result.getMobile());
             addressText.setText(result.getAddress());
             categoryText.setText(result.getCategory());
-            companyName.setText(result.getCompanyName());
+            companyName.setText(result.getCompany_name());
         }
 
         return v;

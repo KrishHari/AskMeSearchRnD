@@ -12,9 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.askme.getit.askmesearch.retrofit.ApiClient;
+import com.askme.getit.askmesearch.retrofit.SearchApiInterface;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +58,21 @@ public class MainActivity extends AppCompatActivity {
                    }
                },MainActivity.this);
 
-                searchProcess.execute(searchText.getText().toString().trim());
+                //searchProcess.execute(searchText.getText().toString().trim());
+
+                SearchApiInterface searchApiInterface = ApiClient.getDealsApiClient();
+                searchApiInterface.getDeals(searchText.getText().toString(), new retrofit.Callback<SearchModel>() {
+                    @Override
+                    public void success(SearchModel searchModels, retrofit.client.Response response) {
+                        Log.i("SearchModel"," "+searchModels.toString()+" response "+response);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.i("Error",""+error.getMessage());
+                    }
+                });
+
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -56,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
                         InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
+
+
+
+
+
+
     }
 
     @Override

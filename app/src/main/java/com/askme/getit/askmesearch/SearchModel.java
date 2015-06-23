@@ -5,17 +5,17 @@ package com.askme.getit.askmesearch;
  */
 public class SearchModel {
 
-    private String mobileNumber;
+    private String mobile;
     private String category;
     private String address;
-    private String companyName;
+    private String company_name;
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getCategory() {
@@ -34,11 +34,11 @@ public class SearchModel {
         this.address = address;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getCompany_name() {
+        return company_name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 }

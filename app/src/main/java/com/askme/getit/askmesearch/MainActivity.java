@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<SearchModel> searchResultList = new ArrayList<SearchModel>();
     SearchListAdapter listAdapter;
     ListView searchList;
+    MaterialProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         searchButton = (Button)findViewById(R.id.searchButton);
         searchText = (EditText)findViewById(R.id.searchText);
         searchList =  (ListView)findViewById(R.id.deals_listview);
+        dialog = new MaterialProgressDialog(this);
         final SearchResultProcessor searchResultProcessor = new SearchResultProcessor(getApplicationContext());
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +62,14 @@ public class MainActivity extends AppCompatActivity {
                 }, MainActivity.this);
 
                 //searchProcess.execute(searchText.getText().toString().trim());
-
+                dialog.showDialog();
                 SearchApiInterface searchApiInterface = ApiClient.getDealsApiClient();
                 final Long startTime = System.nanoTime();
                 searchApiInterface.getDeals(searchText.getText().toString(), new retrofit.Callback<SearchResponseModel>() {
                             @Override
                             public void success(SearchResponseModel searchModels, retrofit.client.Response response) {
                                 Log.i("Elapsed Time",""+(System.nanoTime()-startTime));
+                                dialog.dismissDialog();
                                 //Log.i("Result ",""+searchModels.deals.toString()+" Response "+response);
                                 ArrayList<SearchModel> alist= new ArrayList<SearchModel>();
                                 alist.addAll(searchModels.deals.listings);

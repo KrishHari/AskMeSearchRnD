@@ -108,6 +108,23 @@ public class MainActivity extends AppCompatActivity {
               }
 
           }
+
+
+            @Override
+            public void postResponse(SearchResponseModel result) {
+                httpRoundTripTime= System.nanoTime();
+                searchResultList = new ArrayList<SearchModel>(result.deals.listings);
+                httpTime.setText("Http+Json Time : "+" "+((double)(httpRoundTripTime-strttime)/1000000000.0));
+
+                listAdapter = new SearchListAdapter(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,searchResultList);
+                //jsonParseTime=System.nanoTime();
+
+
+               // jsontime.setText(jsontitle  +" "+ ((double) (jsonParseTime - httpRoundTripTime) / 1000000000.0));
+
+                searchList.setAdapter(listAdapter);
+
+            }
       };
 
 
@@ -117,8 +134,17 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
 
-            SearchProcressVolley searchProcess = new SearchProcressVolley(responseProcreser,MainActivity.this);
-            searchProcess.performrequest(searchText.getText().toString().trim());
+            if(true){
+                SearchProcressWasp searchProcess = new SearchProcressWasp(responseProcreser,MainActivity.this);
+                searchProcess.performrequest(searchText.getText().toString().trim());
+
+            }
+            else{
+                SearchProcressVolley searchProcess = new SearchProcressVolley(responseProcreser,MainActivity.this);
+                searchProcess.performrequest(searchText.getText().toString().trim());
+            }
+
+
 
         }
 

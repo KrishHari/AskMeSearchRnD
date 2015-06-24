@@ -40,8 +40,8 @@ public class SearchModel {
     private String headerimage;
     @JsonField
     private String id;
-    @JsonField
-    private List<String> keywords;
+    //@JsonField
+    //private List<String> keywords;
     @JsonField
     private String landingurl;
     @JsonField
@@ -148,13 +148,13 @@ public class SearchModel {
         this.id = id;
     }
 
-    public List<String> getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(List<String> keywords) {
-        this.keywords = keywords;
-    }
+//    public List<String> getKeywords() {
+//        return keywords;
+//    }
+//
+//    public void setKeywords(List<String> keywords) {
+//        this.keywords = keywords;
+//    }
 
     public String getLandingurl() {
         return landingurl;

@@ -1,6 +1,7 @@
 package com.askme.getit.askmesearch;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,14 +15,14 @@ import android.widget.ListView;
 
 import com.askme.getit.askmesearch.retrofit.ApiClient;
 import com.askme.getit.askmesearch.retrofit.SearchApiInterface;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import com.askme.getit.askmesearch.retrofit.SearchResponseModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit.RetrofitError;
@@ -44,37 +45,45 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               SearchProcess searchProcess = new SearchProcess(new SearchResponse() {
-                   @Override
-                   public void postResponse(String result) {
-                       try{
-                           searchResultList = searchResultProcessor.processResult(result);
-                           listAdapter = new SearchListAdapter(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,searchResultList);
-                           searchList.setAdapter(listAdapter);
-                       }catch (JSONException j){
+                SearchProcess searchProcess = new SearchProcess(new SearchResponse() {
+                    @Override
+                    public void postResponse(String result) {
+                        try {
+                            searchResultList = searchResultProcessor.processResult(result);
+                            listAdapter = new SearchListAdapter(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, searchResultList);
+                            searchList.setAdapter(listAdapter);
+                        } catch (JSONException j) {
                             j.printStackTrace();
-                       }
+                        }
 
-                   }
-               },MainActivity.this);
+                    }
+                }, MainActivity.this);
 
                 //searchProcess.execute(searchText.getText().toString().trim());
 
                 SearchApiInterface searchApiInterface = ApiClient.getDealsApiClient();
-                searchApiInterface.getDeals(searchText.getText().toString(), new retrofit.Callback<SearchModel>() {
-                    @Override
-                    public void success(SearchModel searchModels, retrofit.client.Response response) {
-                        Log.i("SearchModel"," "+searchModels.toString()+" response "+response);
-                    }
+                final Long startTime = System.nanoTime();
+                searchApiInterface.getDeals(searchText.getText().toString(), new retrofit.Callback<SearchResponseModel>() {
+                            @Override
+                            public void success(SearchResponseModel searchModels, retrofit.client.Response response) {
+                                Log.i("Elapsed Time",""+(System.nanoTime()-startTime));
+                                //Log.i("Result ",""+searchModels.deals.toString()+" Response "+response);
+                                ArrayList<SearchModel> alist= new ArrayList<SearchModel>();
+                                alist.addAll(searchModels.deals.listings);
+                                //Log.i("DealListings",alist.toString());
+                                listAdapter = new SearchListAdapter(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, alist);
+                                searchList.setAdapter(listAdapter);
+                            }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.i("Error",""+error.getMessage());
-                    }
-                });
+                            @Override
+                            public void failure(RetrofitError error) {
+                                Log.i("Error",error.getMessage());
+                            }
+                        });
 
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                        InputMethodManager inputManager = (InputMethodManager)
+                                getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
@@ -86,6 +95,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public class Process extends AsyncTask<String,Void,String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
     }
 
     @Override

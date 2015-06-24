@@ -1,5 +1,8 @@
 package com.askme.getit.askmesearch;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by hcv on 16/06/15.
  */
@@ -9,6 +12,7 @@ public class SearchModel {
     private String category;
     private String address;
     private String company_name;
+
 
     public String getMobile() {
         return mobile;
@@ -37,6 +41,9 @@ public class SearchModel {
     public String getCompany_name() {
         return company_name;
     }
+
+
+
 
     public void setCompany_name(String company_name) {
         this.company_name = company_name;

@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.askme.getit.askmesearch.retrofit.ApiClient;
 import com.askme.getit.askmesearch.retrofit.SearchApiInterface;
@@ -29,28 +30,35 @@ import retrofit.RetrofitError;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button searchButton;
+    Button searchButtonOkhttp;
+    Button searchButtonRetrofit;
     EditText searchText;
     private ArrayList<SearchModel> searchResultList = new ArrayList<SearchModel>();
     SearchListAdapter listAdapter;
     ListView searchList;
     MaterialProgressDialog dialog;
+    TextView timeElapsed;
+    long startTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        searchButton = (Button)findViewById(R.id.searchButton);
+        searchButtonOkhttp = (Button)findViewById(R.id.searchButton);
         searchText = (EditText)findViewById(R.id.searchText);
         searchList =  (ListView)findViewById(R.id.deals_listview);
+        searchButtonRetrofit = (Button)findViewById(R.id.searchButtonRetrofit);
+        timeElapsed = (TextView)findViewById(R.id.timeElapsed);
         dialog = new MaterialProgressDialog(this);
         final SearchResultProcessor searchResultProcessor = new SearchResultProcessor(getApplicationContext());
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        searchButtonOkhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startTime = System.nanoTime();
                 SearchProcess searchProcess = new SearchProcess(new SearchResponse() {
                     @Override
                     public void postResponse(String result) {
                         try {
+                            timeElapsed.setText("Elapsed time " + (System.nanoTime() - startTime)/1000000000);
                             searchResultList = searchResultProcessor.processResult(result);
                             listAdapter = new SearchListAdapter(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, searchResultList);
                             searchList.setAdapter(listAdapter);
@@ -61,28 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, MainActivity.this);
 
-                //searchProcess.execute(searchText.getText().toString().trim());
-                dialog.showDialog();
-                SearchApiInterface searchApiInterface = ApiClient.getDealsApiClient();
-                final Long startTime = System.nanoTime();
-                searchApiInterface.getDeals(searchText.getText().toString(), new retrofit.Callback<SearchResponseModel>() {
-                            @Override
-                            public void success(SearchResponseModel searchModels, retrofit.client.Response response) {
-                                Log.i("Elapsed Time",""+(System.nanoTime()-startTime));
-                                dialog.dismissDialog();
-                                //Log.i("Result ",""+searchModels.deals.toString()+" Response "+response);
-                                ArrayList<SearchModel> alist= new ArrayList<SearchModel>();
-                                alist.addAll(searchModels.deals.listings);
-                                //Log.i("DealListings",alist.toString());
-                                listAdapter = new SearchListAdapter(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, alist);
-                                searchList.setAdapter(listAdapter);
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                                Log.i("Error",error.getMessage());
-                            }
-                        });
+                searchProcess.execute(searchText.getText().toString().trim());
 
 
                         InputMethodManager inputManager = (InputMethodManager)
@@ -91,6 +78,40 @@ public class MainActivity extends AppCompatActivity {
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
             }
+        });
+
+        searchButtonRetrofit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTime = System.nanoTime();
+                dialog.showDialog();
+                SearchApiInterface searchApiInterface = ApiClient.getDealsApiClient();
+                final Long startTime = System.nanoTime();
+                searchApiInterface.getDeals(searchText.getText().toString(), new retrofit.Callback<SearchResponseModel>() {
+                    @Override
+                    public void success(SearchResponseModel searchModels, retrofit.client.Response response) {
+                        timeElapsed.setText("Elapsed time " + (System.nanoTime() - startTime)/1000000000);
+                        dialog.dismissDialog();
+                        ArrayList<SearchModel> alist = new ArrayList<SearchModel>();
+                        alist.addAll(searchModels.deals.listings);
+                        listAdapter = new SearchListAdapter(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, alist);
+                        searchList.setAdapter(listAdapter);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.i("Error", error.getMessage());
+                    }
+                });
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
+            }
+
+
         });
 
 

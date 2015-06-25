@@ -32,14 +32,9 @@ public class SearchResultProcressorLS {
         try {
             JSONObject rootobject = new JSONObject(response.toString());
             String listitngString =rootobject.getJSONObject("deals").getString("listings");
-
             List<SearchModel> temp  =   LoganSquare.parseList(listitngString, SearchModel.class);
-
-
-            tmp = new ArrayList<SearchModel>(temp);
-
-
-
+            SearchResponseModel model = LoganSquare.parse(response,SearchResponseModel.class);
+            tmp = new ArrayList<SearchModel>(model.deals.listings);
         }
         catch (JSONException exception)
         {

@@ -23,29 +23,40 @@ import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity {
 
-    @InjectView(R.id.httpTimeTitle)
+    @InjectView(R.id.operationTimeTitle)
     TextView httpTime;
 
-    @InjectView(R.id.jsonTime)
-    TextView jsontime;
-
+    @InjectView(R.id.searchButton)
     Button searchButton;
+
+    @InjectView(R.id.searchText)
     EditText searchText;
+
+    @InjectView(R.id.deals_listview)
+    ListView searchList;
+
+
+
+
+
+
+
+//    @InjectView(R.id.jsonTime)
+//    TextView jsontime;
+
 
     String httptitle ;
     String jsontitle ;
     long strttime,httpRoundTripTime,jsonParseTime;
     private ArrayList<SearchModel> searchResultList = new ArrayList<>();
     SearchListAdapter listAdapter;
-    ListView searchList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        searchButton = (Button)findViewById(R.id.searchButton);
-        searchText = (EditText)findViewById(R.id.searchText);
-        searchList =  (ListView)findViewById(R.id.deals_listview);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     strttime=System.nanoTime();
 
                     httpTime.setText(httptitle);
-                    jsontime.setText(jsontitle);
+                   // jsontime.setText(jsontitle);
                     performSearch();
 
 
@@ -98,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                  jsontime.setText(jsontitle  +" "+ ((double) (jsonParseTime - httpRoundTripTime) / 1000000000.0));
+                 // jsontime.setText(jsontitle  +" "+ ((double) (jsonParseTime - httpRoundTripTime) / 1000000000.0));
 
                   searchList.setAdapter(listAdapter);
               }catch (JSONException j){

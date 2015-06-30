@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -35,8 +36,12 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.deals_listview)
     ListView searchList;
 
+    @InjectView(R.id.opertionSwitch)
+    Spinner httpclientselector;
 
 
+    @InjectView(R.id.jsonparseSwitchr)
+    Spinner jsonparserselector;
 
 
 
@@ -56,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {

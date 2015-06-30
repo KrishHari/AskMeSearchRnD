@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by hcv on 17/06/15.
  */
-public class SearchResultProcessor {
+public class SearchResultProcessor implements ResultProcressor{
     private Context mContext;
     private ArrayList<SearchModel> searchList;
     long startTime;

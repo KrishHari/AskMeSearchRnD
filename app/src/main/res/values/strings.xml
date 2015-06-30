@@ -10,4 +10,15 @@
     <string name="jsontime">Time for JSON parsing :</string>
     <string name="category_name">Category</string>
     <string name="address_text">Address</string>
+    <string-array name="http_clients">
+        <item>Native</item>
+        <item>Volley</item>
+        <item>Wasp</item>
+        <item>Retrofit</item>
+    </string-array>
+    <string-array name="json_client">
+        <item>Native</item>
+        <item>LoganSquare</item>
+    </string-array>
+
 </resources>

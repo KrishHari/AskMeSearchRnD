@@ -13,10 +13,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.Result;
+
 /**
  * Created by LeScud on 23/06/15.
  */
-public class SearchResultProcressorLS {
+public class SearchResultProcressorLS implements ResultProcressor {
 
     private Context mContext;
 

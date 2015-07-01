@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(position==2){
                     jsonparserselector.setVisibility(View.INVISIBLE);
-                    jsonparingOption=0;
+                    jsonparingOption=-1;
 
                 }
                 else{
@@ -95,6 +95,23 @@ public class MainActivity extends AppCompatActivity {
                     jsonparserselector.setSelection(0);
                     jsonparingOption=0;
                 }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        jsonparserselector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                jsonparingOption = position;
 
             }
 
@@ -150,6 +167,17 @@ public class MainActivity extends AppCompatActivity {
     void  performSearch(){
 
 
+
+
+
+
+
+
+        //jsonParseTime=System.nanoTime();
+
+
+
+
         SearchResponse responseProcreser;
 
         if(jsonparingOption==-1) {
@@ -178,6 +206,8 @@ public class MainActivity extends AppCompatActivity {
            final ResultProcressor searchResultProcessor;
 
 
+
+
             if(jsonparingOption==0) {
 
                 searchResultProcessor  = new SearchResultProcessor(getApplicationContext());
@@ -191,10 +221,14 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void postResponse(String result) {
+                    httpRoundTripTime= System.nanoTime();
 
                     try{
                         searchResultList = searchResultProcessor.processResult(result);
+                        jsonParseTime = System.nanoTime();
+                        opertionTime.setText("Http round trip time : " + " " + ((double) (httpRoundTripTime - strttime) / 1000000000.0) + " Json Parser Time :" + ((double)(jsonParseTime-httpRoundTripTime)/1000000000.0));
                         updateList(searchResultList);
+
                     }catch (JSONException j){
                         Log.d(Constants.TAG,j.getMessage());
                         j.printStackTrace();
@@ -215,21 +249,25 @@ public class MainActivity extends AppCompatActivity {
 
 
         switch (Httpclientoptions) {
-            case 1 :
+            case 0 :
                 SearchProcess  searchProcress = new SearchProcess(responseProcreser,this);
                 searchProcress.execute(searchText.getText().toString().trim());
                 break;
 
-            case 2 :
+            case 1 :
 
                 SearchProcressVolley  searchProcress2 = new SearchProcressVolley(responseProcreser,this);
                 searchProcress2.performrequest(searchText.getText().toString().trim());
                 break;
 
-            case 3 :
+            case 2 :
 
                 SearchProcressWasp  searchProcress3 = new SearchProcressWasp(responseProcreser,this);
                 searchProcress3.performrequest(searchText.getText().toString().trim());
+                break;
+
+            default :
+                Log.d(Constants.TAG,"invalid http search client selection");
                 break;
 
         }
